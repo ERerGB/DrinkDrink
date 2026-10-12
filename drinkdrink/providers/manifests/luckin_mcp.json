@@ -1,0 +1,21 @@
+{
+  "id": "luckin_mcp",
+  "brand": "瑞幸咖啡",
+  "surface": "mcp",
+  "audience": "consumer",
+  "status": "documented",
+  "verified_on": "2026-10-13",
+  "source_urls": ["https://open.lkcoffee.com/mcp", "https://open.lkcoffee.com/docs"],
+  "endpoint": "https://gwmcp.lkcoffee.com/order/user/mcp",
+  "capabilities": {
+    "discover_stores": "queryShopList",
+    "search_drinks": "searchProductForMcp",
+    "switch_product": "switchProduct",
+    "product_detail": "queryProductDetailInfo",
+    "preview_order": "previewOrder",
+    "create_order": "createOrder",
+    "get_order": "queryOrderDetailInfo",
+    "cancel_order": "cancelOrder"
+  },
+  "notes": "Streamable HTTP; user login supplies a Bearer token. Verify live tool schemas, coupon selection, payable amount and payment result in the connected session."
+}

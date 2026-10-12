@@ -1,0 +1,12 @@
+{
+  "id": "luckin_cli",
+  "brand": "瑞幸咖啡",
+  "surface": "cli",
+  "audience": "consumer",
+  "status": "documented",
+  "verified_on": "2026-10-13",
+  "source_urls": ["https://open.lkcoffee.com/cli", "https://open.lkcoffee.com/install"],
+  "endpoint": null,
+  "capabilities": {},
+  "notes": "Official CLI distribution reference. This project does not install, bundle or invoke the CLI; its command and authentication contract need separate verification before adding an executable adapter."
+}

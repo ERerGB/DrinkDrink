@@ -1,0 +1,12 @@
+{
+  "id": "meituan_developer",
+  "brand": "美团",
+  "surface": "developer_portal",
+  "audience": "merchant_or_partner",
+  "status": "research_only",
+  "verified_on": "2026-10-13",
+  "source_urls": ["https://developer.meituan.com/"],
+  "endpoint": null,
+  "capabilities": {},
+  "notes": "Official developer portal advertises MCP/Skills, but a public consumer ordering surface for the buyer's Meituan account is not verified. Do not treat merchant or partner APIs as a consumer adapter."
+}

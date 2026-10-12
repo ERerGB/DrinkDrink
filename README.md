@@ -1,8 +1,8 @@
 # DrinkDrink
 
-从“想喝什么”到“收到饮品”的开源 Skill：发现选择、跨渠道和支付方式比价、核实优惠券、下单、跟踪履约、处理问题。首版提供通用流程、离线结算核对工具和本地订单记录；实际商家操作由可用的连接器或应用界面完成。
+从“想喝什么”到“收到饮品”的开源 Skill：发现选择、跨渠道和支付方式比价、核实优惠券、下单、跟踪履约、处理问题。项目提供通用流程、离线结算核对工具、本地订单记录，以及官方 MCP 接口模块目录；实际商家操作需要用户已连接的账户与工具，或可访问的应用界面。
 
-A Codex skill and small offline tools for the full drink ordering life cycle: idea, discovery, comparison, purchase, fulfillment, receipt, and follow-up. It works with coffee, tea, and other drinks across delivery apps, brand mini programs, and pickup. Its comparator checks the buyer's actual checkout totals, coupon applicability, payment offers, fulfillment, and time. The tools do not connect to accounts or submit orders by themselves; the skill uses available connectors or app UI for those steps.
+A Codex skill and small offline tools for the full drink ordering life cycle: idea, discovery, comparison, purchase, fulfillment, receipt, and follow-up. It works with coffee, tea, and other drinks across delivery apps, brand mini programs, and pickup. Its comparator checks the buyer's actual checkout totals, coupon applicability, payment offers, fulfillment, and time. Official MCP modules now provide a common call boundary when an authenticated host connection is available; the repository itself does not log in or submit orders.
 
 ```mermaid
 flowchart LR
@@ -37,9 +37,21 @@ python3 drinkdrink/scripts/android_capture.py screenshot --out private/current-s
 - Do not store account credentials, addresses, or private order history in the repository.
 - Merchant rules change. Read them in the buyer's current app session; this project does not publish a static coupon catalog.
 
+## Official provider modules
+
+The [source inventory](drinkdrink/references/official-providers.md) and one-file-per-surface [catalog](drinkdrink/providers/manifests/) track official entry points, verified dates, access scope, and supported actions. The catalog currently has callable mappings for 瑞幸咖啡 and 麦当劳中国 MCP. 瑞幸's official CLI and Skill are upstream references; 美团's developer portal is research only because consumer ordering access is unverified.
+
+```sh
+python3 drinkdrink/scripts/provider_catalog.py list
+python3 drinkdrink/scripts/provider_catalog.py show luckin_mcp
+python3 drinkdrink/scripts/provider_catalog.py audit --max-age-days 90
+```
+
+`drinkdrink.providers.ProviderModule.call()` accepts a connected MCP tool caller injected by the host. It passes through the exact vendor arguments and raw response, checks declared and optionally live tool availability, and requires an authorization object tied to the exact arguments before order creation, cancellation, or coupon claiming. It does not install vendors' software or store tokens. See the [adapter contract](drinkdrink/references/adapter-contract.md) to connect a host and turn observed checkout data into a quote. These modules have been checked against documentation, not tested against an authenticated account.
+
 ## Channel integrations
 
-The comparison model accepts multiple merchants, apps, mini programs, delivery or pickup paths, and payment methods. Each payment method that changes the total is a separate declared path. See the [adapter contract](drinkdrink/references/adapter-contract.md) for adding a channel. The first release has a generic Android screenshot helper but no merchant-specific API integration, so an agent must gather checkout evidence through an available connector or app UI. Merchant adapters are future work.
+The comparison model accepts multiple merchants, apps, mini programs, delivery or pickup paths, and payment methods. Each payment method that changes the total is a separate declared path. See the [adapter contract](drinkdrink/references/adapter-contract.md) for adding a channel. For channels without a verified consumer interface, an agent gathers checkout evidence through an available connector or app UI. The generic Android screenshot helper remains read-only.
 
 ## Development
 

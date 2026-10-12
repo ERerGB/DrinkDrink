@@ -1,0 +1,12 @@
+{
+  "id": "luckin_skill",
+  "brand": "瑞幸咖啡",
+  "surface": "skill",
+  "audience": "consumer",
+  "status": "documented",
+  "verified_on": "2026-10-13",
+  "source_urls": ["https://open.lkcoffee.com/skill", "https://unpkg.luckincoffeecdn.com/@luckin/my-coffee-skill@latest/dist/my-coffee-skill.zip"],
+  "endpoint": null,
+  "capabilities": {},
+  "notes": "Official My Coffee Skill distribution reference. Upstream package is not vendored; inspect current content and license before recommending installation."
+}

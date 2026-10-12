@@ -1,0 +1,24 @@
+{
+  "id": "mcd_china_mcp",
+  "brand": "麦当劳中国",
+  "surface": "mcp",
+  "audience": "consumer",
+  "status": "documented",
+  "verified_on": "2026-10-13",
+  "source_urls": ["https://github.com/M-China/mcd-mcp-server", "https://open.mcd.cn/mcp"],
+  "endpoint": "https://mcp.mcd.cn",
+  "capabilities": {
+    "discover_stores": "query-nearby-stores",
+    "delivery_stores": "delivery-query-stores",
+    "search_drinks": "query-meals",
+    "product_detail": "query-meal-detail",
+    "store_coupons": "query-store-coupons",
+    "my_coupons": "query-my-coupons",
+    "preview_order": "calculate-price",
+    "create_order": "create-order",
+    "get_order": "query-order",
+    "cancel_order": "cancel-order",
+    "claim_coupon": "auto-bind-coupons"
+  },
+  "notes": "China mainland consumer MCP; authenticated Streamable HTTP. Ordering supports delivery and pickup. Inspect live schemas and units before converting price output into a DrinkDrink quote."
+}
