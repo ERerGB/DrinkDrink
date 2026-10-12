@@ -59,4 +59,4 @@ The comparison model accepts multiple merchants, apps, mini programs, delivery o
 python3 -m unittest discover -s tests -v
 ```
 
-MIT licensed. Contributions for additional channel adapters are welcome when they use authorized access and preserve checkout verification.
+Licensed under the [Apache License, Version 2.0](LICENSE). Contributions for additional channel adapters are welcome when they use authorized access and preserve checkout verification.
