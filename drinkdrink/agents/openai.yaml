@@ -1,0 +1,4 @@
+interface:
+  display_name: "DrinkDrink"
+  short_description: "Plan, compare, order, and follow through on drinks"
+  default_prompt: "Use $drinkdrink to help me choose and order a drink at the best verified total."

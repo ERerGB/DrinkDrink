@@ -1,0 +1,102 @@
+{
+  "request": {
+    "category": "iced_latte",
+    "temperature": "iced",
+    "quantity": 1,
+    "min_volume_ml": 450,
+    "allowed_fulfillment": ["delivery", "pickup"],
+    "max_eta_minutes": 45,
+    "currency": "CNY",
+    "max_age_minutes": 30
+  },
+  "coverage": [
+    {"path_id": "pickup-wechat", "channel": "Brand pickup", "fulfillment": "pickup", "payment_method": "WeChat Pay", "status": "checked"},
+    {"path_id": "brand-delivery-wallet", "channel": "Brand delivery", "fulfillment": "delivery", "payment_method": "Wallet + WeChat Pay", "status": "checked"},
+    {"path_id": "marketplace-alipay", "channel": "Delivery marketplace", "fulfillment": "delivery", "payment_method": "Alipay", "status": "checked"}
+  ],
+  "quotes": [
+    {
+      "id": "pickup-wechat",
+      "path_id": "pickup-wechat",
+      "merchant": "Example Coffee",
+      "channel": "Brand pickup",
+      "store": "Example store",
+      "fulfillment": "pickup",
+      "product": {"name": "Iced latte", "category": "iced_latte", "temperature": "iced", "quantity": 1, "volume_ml": 473},
+      "eta_minutes": 15,
+      "observed_at": "2026-10-13T09:00:00+08:00",
+      "payment_method": "WeChat Pay",
+      "incentives_reviewed": true,
+      "incentives": [
+        {"name": "Pickup coupon", "kind": "merchant_coupon", "outcome": "applied"},
+        {"name": "Card offer", "kind": "payment_offer", "outcome": "ineligible", "reason": "minimum spend not met"}
+      ],
+      "checkout": {
+        "verified": true,
+        "evidence": "synthetic final checkout preview",
+        "item_price": "38.00",
+        "fees": {"packaging": "0.00", "delivery": "0.00", "service": "0.00"},
+        "discounts": [{"name": "Pickup coupon", "kind": "merchant_coupon", "amount": "19.00"}],
+        "payable": "19.00",
+        "wallet_used": "0.00",
+        "cash_due": "19.00"
+      }
+    },
+    {
+      "id": "brand-delivery-wallet",
+      "path_id": "brand-delivery-wallet",
+      "merchant": "Example Coffee",
+      "channel": "Brand delivery",
+      "store": "Example store",
+      "fulfillment": "delivery",
+      "product": {"name": "Iced latte", "category": "iced_latte", "temperature": "iced", "quantity": 1, "volume_ml": 473},
+      "eta_minutes": 30,
+      "observed_at": "2026-10-13T09:01:00+08:00",
+      "payment_method": "Wallet + WeChat Pay",
+      "incentives_reviewed": true,
+      "incentives": [
+        {"name": "Pickup coupon", "kind": "merchant_coupon", "outcome": "ineligible", "reason": "pickup only"}
+      ],
+      "checkout": {
+        "verified": true,
+        "evidence": "synthetic final checkout preview",
+        "item_price": "38.00",
+        "fees": {"packaging": "1.00", "delivery": "6.00", "service": "0.00"},
+        "discounts": [],
+        "payable": "45.00",
+        "wallet_used": "20.00",
+        "cash_due": "25.00"
+      }
+    },
+    {
+      "id": "marketplace-alipay",
+      "path_id": "marketplace-alipay",
+      "merchant": "Other Coffee",
+      "channel": "Delivery marketplace",
+      "store": "Other store",
+      "fulfillment": "delivery",
+      "product": {"name": "Iced latte", "category": "iced_latte", "temperature": "iced", "quantity": 1, "volume_ml": 480},
+      "eta_minutes": 25,
+      "observed_at": "2026-10-13T09:02:00+08:00",
+      "payment_method": "Alipay",
+      "incentives_reviewed": true,
+      "incentives": [
+        {"name": "Marketplace voucher", "kind": "platform_coupon", "outcome": "applied"},
+        {"name": "Alipay offer", "kind": "payment_offer", "outcome": "applied"}
+      ],
+      "checkout": {
+        "verified": true,
+        "evidence": "synthetic final checkout preview",
+        "item_price": "32.00",
+        "fees": {"packaging": "1.00", "delivery": "3.00", "service": "0.00"},
+        "discounts": [
+          {"name": "Marketplace voucher", "kind": "platform_coupon", "amount": "5.00"},
+          {"name": "Alipay offer", "kind": "payment_offer", "amount": "2.00"}
+        ],
+        "payable": "29.00",
+        "wallet_used": "0.00",
+        "cash_due": "29.00"
+      }
+    }
+  ]
+}
