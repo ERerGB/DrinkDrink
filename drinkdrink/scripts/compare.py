@@ -39,6 +39,13 @@ def required(mapping, key, label):
     return mapping[key]
 
 
+def verified_flag(mapping, key, label):
+    value = mapping.get(key, False)
+    if not isinstance(value, bool):
+        raise QuoteError(f"{label}.{key}: expected a JSON boolean")
+    return value
+
+
 def evaluate(data, now=None):
     now = now or datetime.now(timezone.utc)
     request = required(data, "request", "input")
@@ -167,11 +174,11 @@ def evaluate(data, now=None):
         discount_keys = [(required(d, "name", f"{quote_id}.discount"), required(d, "kind", f"{quote_id}.discount")) for d in discounts]
         if len(discount_keys) != len(set(discount_keys)) or set(discount_keys) != applied_discounts:
             raise QuoteError(f"quote {quote_id}: applied incentives and discount lines differ")
-        if not quote.get("incentives_reviewed", False):
+        if not verified_flag(quote, "incentives_reviewed", quote_id):
             issues.append("incentives not fully reviewed")
-        if not checkout.get("verified", False):
+        if not verified_flag(checkout, "verified", f"{quote_id}.checkout"):
             issues.append("checkout not verified")
-        elif not checkout.get("evidence"):
+        elif not isinstance(checkout.get("evidence"), str) or not checkout["evidence"].strip():
             raise QuoteError(f"quote {quote_id}: verified checkout needs evidence")
         row = {
             "id": quote_id,
