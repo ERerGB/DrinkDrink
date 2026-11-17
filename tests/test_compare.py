@@ -36,6 +36,40 @@ class CompareTests(unittest.TestCase):
         self.assertIsNone(result["winner"])
         self.assertEqual(result["verdict"], "provisional")
 
+    def test_verification_flags_reject_non_boolean_values(self):
+        for key in ("incentives_reviewed", "verified"):
+            for value in ("false", "true", 0, 1, None, [], {}):
+                with self.subTest(key=key, value=value):
+                    data = copy.deepcopy(self.data)
+                    target = data["quotes"][0]
+                    if key == "verified":
+                        target = target["checkout"]
+                    target[key] = value
+                    with self.assertRaisesRegex(compare.QuoteError, "boolean"):
+                        compare.evaluate(data, NOW)
+
+    def test_false_or_missing_verification_remains_provisional(self):
+        for key in ("incentives_reviewed", "verified"):
+            for missing in (False, True):
+                with self.subTest(key=key, missing=missing):
+                    data = copy.deepcopy(self.data)
+                    target = data["quotes"][0]
+                    if key == "verified":
+                        target = target["checkout"]
+                    if missing:
+                        del target[key]
+                    else:
+                        target[key] = False
+                    self.assertEqual(compare.evaluate(data, NOW)["verdict"], "provisional")
+
+    def test_verified_checkout_requires_nonempty_text_evidence(self):
+        for evidence in (" ", 1, True, ["shown"], {"shown": True}):
+            with self.subTest(evidence=evidence):
+                data = copy.deepcopy(self.data)
+                data["quotes"][0]["checkout"]["evidence"] = evidence
+                with self.assertRaisesRegex(compare.QuoteError, "evidence"):
+                    compare.evaluate(data, NOW)
+
     def test_wrong_checkout_arithmetic_is_rejected(self):
         self.data["quotes"][0]["checkout"]["payable"] = "18.00"
         with self.assertRaisesRegex(compare.QuoteError, "payable does not equal"):
