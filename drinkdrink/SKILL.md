@@ -5,23 +5,42 @@ description: Plan and complete a drink order across delivery apps, brand mini pr
 
 # DrinkDrink
 
-Help the buyer complete a drink's life cycle: an idea or craving, product discovery, channel comparison, order and payment, fulfillment, receipt, and a useful follow-up. A purchase path is a merchant, channel, fulfillment mode, store, drink variant, coupon stack, and payment method. Treat delivery and pickup as different paths, including Starbucks 专星送 and 啡快. Never infer that a coupon in one path works in another.
+Compare drinks on the buyer's actual purchase paths, then carry out only the
+requested stage. A path includes merchant, channel, store, variant, fulfillment,
+coupons and payment method; delivery/pickup and differing payment offers are
+separate paths. Resolve only missing constraints that change the choice: size,
+quantity, temperature, dietary/caffeine needs, timing, budget and allowed alternatives.
 
-## Work from the buyer's request
+## Compare without submitting
 
-Translate the buyer's idea into drink type, temperature, minimum acceptable size, quantity, dietary or caffeine constraints, delivery or pickup preference, latest useful arrival time, budget, and any merchant preference. Ask only for a constraint that changes the choice and cannot be observed. If alternatives are allowed, compare equivalent drinks and show material differences in volume or ingredients. Suggest a short list before searching every possible merchant.
+Inspect the requested/relevant channels and equivalent products. Read coupon and
+payment-offer eligibility for that exact product/store/channel/time, threshold and
+stack. A wallet coupon or advertisement is not an applied discount. Capture final
+checkout item/fee/discount lines, payable amount, funding, ETA and observation time.
+Stored balance/prepaid credit is the buyer's money, not savings.
 
-## Compare actual paths
+Use [the quote format](references/quote-format.md) and
+`python3 <skill-dir>/scripts/compare.py quotes.json` for arithmetic, freshness,
+coverage and matching checks. It cannot verify the live checkout for you. Record
+unavailable channels and untested incentives; recommend a verified winner only
+within checked coverage, otherwise explain the best observed provisional choice.
+Keep addresses, account data, screenshots and session tokens private.
 
-1. Inspect relevant available channels. For each, identify the exact drink and store, fulfillment method, item price, fees, ETA, and applicable account coupons. Include channels the buyer names; record any unavailable channel as a coverage gap.
-2. Read each coupon's product, store, channel, time, threshold, cap, and stacking conditions. Check the discount in that path's cart or checkout. Mark untested claims explicitly. A coupon shown in a wallet is not proof it applies.
-3. Inspect payment offers for the selected payment method at checkout. Verify whether they stack with the chosen coupon. Record store credit, prepaid cards, and wallet balances as payment funding, not savings.
-4. Capture the final payable amount and payment funding. Do not submit an order while gathering quotes. Keep account data, addresses, screenshots, and session tokens out of the repository and public examples.
-5. Use [the quote format](references/quote-format.md) and `python3 scripts/compare.py quotes.json` to check arithmetic, freshness, coverage, and comparable products. Model each payment method as a separate quote when it changes the payable total. The script ranks complete paths and marks gaps; it cannot establish coupon eligibility by itself.
-6. Recommend the lowest verified payable path satisfying the buyer's constraints. Explain timing and any tradeoff. If coverage or incentives remain unverified, present the best observed path as provisional instead of claiming a verified cheapest option.
+## Order and follow through when requested
 
-When the buyer asks to place the order, use the connected app or permitted UI path. Before submission, recheck the selected product, store, fulfillment, address or pickup location, coupon lines, payment method, fees, total, and ETA on the final page. Follow the buyer's existing authorization for the order; an unexpected price increase, substituted item, or new commitment requires their decision. Confirm success from the resulting order page or order history, and do not repeat a submission whose status is uncertain.
+Recheck the exact product, store, fulfillment/location, coupon lines, payment,
+fees, total and ETA against the buyer's authorization before submission. Unexpected
+price increases, substitutions or new commitments need a decision. Confirm the
+result in the app/order history; reconcile an uncertain submission before retrying.
 
-After submission, distinguish submitted, paid, accepted, preparing, ready for pickup or in transit, received, and completed. Report only states observed in the merchant app. If there is a problem, help with the app's remedy or refund flow and track its actual result. At receipt, check whether the drink and temperature match, then record the buyer's feedback only if useful for a future choice. Use `python3 scripts/journal.py` for an optional local lifecycle record; read [the journal guide](references/journal.md) when tracking an order across sessions. Keep private order records local and out of public repositories.
+Report only observed order/payment/preparation/delivery/pickup/receipt/refund states.
+Help resolve an actual issue through the app; distinguish payment from acceptance.
+Capture useful buyer feedback without inventing receipt or satisfaction. For
+cross-session tracking, use the optional [local journal](references/journal.md).
 
-The skill does not require a particular platform API. Use a platform's supported connector when available or the buyer's accessible app UI. The [official provider catalog](references/official-providers.md) records documented consumer MCP entry points for 瑞幸 and 麦当劳中国 and upstream CLI/Skill references; read it when configuring or extending an official integration. Check the vendor's current tool list, authentication, and live prices before using it. A catalog entry does not mean a token is connected or a quote is verified. For a connected Android phone, `scripts/android_capture.py` lists devices and saves local screenshots for inspection; it does not tap, order, or pay. Do not assume any third-party GitHub project has merchant authorization or access to a buyer's account. When implementing a new channel adapter, read [the adapter contract](references/adapter-contract.md); ordinary orders do not need that reference.
+Prefer a supported connector or the buyer's accessible app UI. When configuring
+an integration, read [official providers](references/official-providers.md) and
+verify current live tools, authentication, monetary units and prices; a catalog
+entry does not establish access. New adapters use [the adapter contract](references/adapter-contract.md).
+`android_capture.py` only lists devices/saves screenshots; it does not tap, order
+or pay. Ordinary comparisons need neither adapter development nor a new login.
